@@ -274,7 +274,7 @@ if [[ $VPN_ENABLED == "yes" ]]; then
 		wg-quick up $VPN_CONFIG
 		#exec /bin/bash /etc/openvpn/openvpn.init start &
 	fi
-	exec /bin/bash /etc/jackett/iptables.sh
+	exec /bin/bash /etc/flaresolverr/iptables.sh
 else
-	exec /bin/bash /etc/jackett/start.sh
+	exec /bin/bash /etc/flaresolverr/start.sh
 fi

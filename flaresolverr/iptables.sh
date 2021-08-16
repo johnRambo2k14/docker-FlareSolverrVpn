@@ -83,8 +83,8 @@ iptable_mangle_exit_code=$?
 if [[ $iptable_mangle_exit_code == 0 ]]; then
 	echo "[INFO] iptable_mangle support detected, adding fwmark for tables" | ts '%Y-%m-%d %H:%M:%.S'
 
-	# setup route for jackett webui using set-mark to route traffic for port 9117 to "${docker_interface}"
-	echo "9117    webui" >> /etc/iproute2/rt_tables
+	# setup route for jackett webui using set-mark to route traffic for port 8191 to "${docker_interface}"
+	echo "8191    webui" >> /etc/iproute2/rt_tables
 	ip rule add fwmark 1 table webui
 	ip route add default via ${DEFAULT_GATEWAY} table webui
 fi
@@ -108,8 +108,8 @@ iptables -A INPUT -s "${docker_network_cidr}" -d "${docker_network_cidr}" -j ACC
 iptables -A INPUT -i "${docker_interface}" -p $VPN_PROTOCOL --sport $VPN_PORT -j ACCEPT
 
 # accept input to jackett webui port
-iptables -A INPUT -i "${docker_interface}" -p tcp --dport 9117 -j ACCEPT
-iptables -A INPUT -i "${docker_interface}" -p tcp --sport 9117 -j ACCEPT
+iptables -A INPUT -i "${docker_interface}" -p tcp --dport 8191 -j ACCEPT
+iptables -A INPUT -i "${docker_interface}" -p tcp --sport 8191 -j ACCEPT
 
 # additional port list for scripts or container linking
 if [[ ! -z "${ADDITIONAL_PORTS}" ]]; then
@@ -157,13 +157,13 @@ iptables -A OUTPUT -o "${docker_interface}" -p $VPN_PROTOCOL --dport $VPN_PORT -
 # if iptable mangle is available (kernel module) then use mark
 if [[ $iptable_mangle_exit_code == 0 ]]; then
 	# accept output from jackett webui port - used for external access
-	iptables -t mangle -A OUTPUT -p tcp --dport 9117 -j MARK --set-mark 1
-	iptables -t mangle -A OUTPUT -p tcp --sport 9117 -j MARK --set-mark 1
+	iptables -t mangle -A OUTPUT -p tcp --dport 8191 -j MARK --set-mark 1
+	iptables -t mangle -A OUTPUT -p tcp --sport 8191 -j MARK --set-mark 1
 fi
 
 # accept output from jackett webui port - used for lan access
-iptables -A OUTPUT -o "${docker_interface}" -p tcp --dport 9117 -j ACCEPT
-iptables -A OUTPUT -o "${docker_interface}" -p tcp --sport 9117 -j ACCEPT
+iptables -A OUTPUT -o "${docker_interface}" -p tcp --dport 8191 -j ACCEPT
+iptables -A OUTPUT -o "${docker_interface}" -p tcp --sport 8191 -j ACCEPT
 
 # additional port list for scripts or container linking
 if [[ ! -z "${ADDITIONAL_PORTS}" ]]; then
@@ -196,4 +196,4 @@ echo "--------------------"
 iptables -S
 echo "--------------------"
 
-exec /bin/bash /etc/jackett/start.sh
+exec /bin/bash /etc/flaresolverr/start.sh

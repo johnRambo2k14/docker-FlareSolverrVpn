@@ -1,12 +1,12 @@
 #!/bin/bash
 ### BEGIN INIT INFO
-# Provides: jackett
+# Provides: flaresolverr
 # Required-Start: $remote_fs $syslog
 # Required-Stop: $remote_fs $syslog
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
-# Short-Description: Starts Jackett
-# Description: Start jackett on start. Change USER= before running
+# Short-Description: Starts flaresolverr
+# Description: Start flaresolverr on start. Change USER= before running
 ### END INIT INFO
 
 # Author: Jesper Smith
@@ -21,16 +21,22 @@ USER=${PUID}
 GROUP=${PGID}
 
 PATH="/sbin:/usr/sbin:/bin:/usr/bin"
-SCRIPTNAME="/etc/init.d/jackett"
-NAME="jackett"
-DESC="jackett"
+SCRIPTNAME="/etc/init.d/flaresolverr"
+NAME="flaresolverr"
+DESC="flaresolverr"
 PIDFILE="/var/run/$NAME.pid"
-JACKETTLOGPATH="/config/Jackett/Logs/"
+JACKETTLOGPATH="/config/flaresolverr/Logs/"
 JACKETTLOG="log.txt"
 
-DAEMON="/opt/Jackett/jackett"
+DAEMON="/opt/flaresolverr/flaresolverr"
 DAEMON_ARGS="--NoRestart --NoUpdates"
 DAEMONSTRING="$DAEMON $DAEMON_ARGS >> $JACKETTLOGPATH$JACKETTLOG 2>&1"
+
+export LOG_LEVEL=${LOG_LEVEL}
+export TZ=${TZ}
+export LOG_HTML=${LOG_HTML}
+export CAPTCHA_SOLVER=${CAPTCHA_SOLVER}
+export LAN_NETWORK=${LAN_NETWORK}
 
 export DBUS_SESSION_BUS_ADDRESS=""
 
@@ -55,7 +61,7 @@ do_start()
 	# Check if log path exists. If it doesn't exist, create it.
 	if [ ! -e $JACKETTLOGPATH ]; then
 		mkdir -p $JACKETTLOGPATH
-		chown -R ${PUID}:${PGID} /config/Jackett
+		chown -R ${PUID}:${PGID} /config/flaresolverr
 	fi
 	
 	# Check for log file. If it doesn't exist, create it.
@@ -81,7 +87,7 @@ do_start()
 
 	start-stop-daemon --start --chuid $USER:$GROUP --make-pidfile --pidfile $PIDFILE --background --exec /bin/bash -- -c "$DAEMONSTRING" || return 2
 	sleep 1
-	echo "[INFO] Started Jackett daemon successfully..." | ts '%Y-%m-%d %H:%M:%.S'
+	echo "[INFO] Started flaresolverr daemon successfully..." | ts '%Y-%m-%d %H:%M:%.S'
 }
 
 #
