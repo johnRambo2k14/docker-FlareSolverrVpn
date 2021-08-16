@@ -2,6 +2,9 @@
 
 Shamelessly stolen from DyonR's Docker Jackett [implementation](https://github.com/DyonR/docker-Jackettvpn) and MarkusMcNugen qBittorrent [implementation](https://github.com/MarkusMcNugen/docker-qBittorrentvpn)
 
+### Notice
+This project was hacked together very quickly. I don't have much time to dedicate to this project, so I apologise in advance if I'm not available. Feel free to fork off this repo. 
+
 [![Docker Pulls](https://img.shields.io/docker/pulls/trigger2k18/flaresolverrvpn)](https://hub.docker.com/r/trigger2k18/flaresolverrvpn)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/trigger2k18/flaresolverrvpn/latest)](https://hub.docker.com/r/trigger2k18/flaresolverrvpn)
 
