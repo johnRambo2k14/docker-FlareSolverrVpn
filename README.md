@@ -1,4 +1,9 @@
-# [Jackett](https://github.com/Jackett/Jackett), WireGuard and OpenVPN
+# [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr), WireGuard and OpenVPN
+
+Shamelessly stolen from DyonR's Docker Jackett [implementation](https://github.com/DyonR/docker-Jackettvpn) and MarkusMcNugen qBittorrent [implementation](https://github.com/MarkusMcNugen/docker-qBittorrentvpn)
+
+## Documentation will update soon.
+
 [![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/jackettvpn)](https://hub.docker.com/r/dyonr/jackettvpn)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/jackettvpn/latest)](https://hub.docker.com/r/dyonr/jackettvpn)
 
