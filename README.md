@@ -27,7 +27,7 @@ $ docker run --privileged  -d \
               -e "LAN_NETWORK=192.168.0.0/24" \
               -p 9117:9117 \
               --restart unless-stopped \
-              dyonr/jackettvpn
+              trigger2k18/flaresolverrvpn
 ```
 
 # Variables, Volumes, and Ports
