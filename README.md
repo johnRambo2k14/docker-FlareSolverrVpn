@@ -1,4 +1,9 @@
 # [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr), WireGuard and OpenVPN
+
+Shamelessly stolen from DyonR's Docker Jackett [implementation](https://github.com/DyonR/docker-Jackettvpn) and MarkusMcNugen qBittorrent [implementation](https://github.com/MarkusMcNugen/docker-qBittorrentvpn)
+
+## Documentation will update soon.
+
 [![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/jackettvpn)](https://hub.docker.com/r/dyonr/jackettvpn)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/jackettvpn/latest)](https://hub.docker.com/r/dyonr/jackettvpn)
 
@@ -8,7 +13,7 @@ Docker container which runs the latest headless [Jackett](https://github.com/Jac
 ![alt text][preview]
 
 ## Docker Features
-* Base: Debian 10-slim
+* Base: Debian bullseye-slim
 * Latest [Jackett](https://github.com/Jackett/Jackett)
 * Selectively enable or disable WireGuard or OpenVPN support
 * IP tables kill switch to prevent IP leaking when VPN connection fails
@@ -26,7 +31,7 @@ $ docker run --privileged  -d \
               -e "VPN_ENABLED=yes" \
               -e "VPN_TYPE=wireguard" \
               -e "LAN_NETWORK=192.168.0.0/24" \
-              -p 8191:8191 \
+              -p 9117:9117 \
               --restart unless-stopped \
               dyonr/jackettvpn
 ```
@@ -45,7 +50,7 @@ $ docker run --privileged  -d \
 |`PUID`| No | UID applied to config files and blackhole |`PUID=99`|`99`|
 |`PGID`| No | GID applied to config files and blackhole |`PGID=100`|`100`|
 |`UMASK`| No | |`UMASK=002`|`002`|
-|`WEBUI_PORT`| No | Sets the port of the Jackett server in the ServerConfig.json, needs to match the **exposed port** in the Dockerfile  |`WEBUI_PORT=8191`|`8191`|
+|`WEBUI_PORT`| No | Sets the port of the Jackett server in the ServerConfig.json, needs to match the **exposed port** in the Dockerfile  |`WEBUI_PORT=9117`|`9117`|
 |`HEALTH_CHECK_HOST`| No |This is the host or IP that the healthcheck script will use to check an active connection|`HEALTH_CHECK_HOST=one.one.one.one`|`one.one.one.one`|
 |`HEALTH_CHECK_INTERVAL`| No |This is the time in seconds that the container waits to see if the internet connection still works (check if VPN died)|`HEALTH_CHECK_INTERVAL=300`|`300`|
 |`HEALTH_CHECK_SILENT`| No |Set to `1` to supress the 'Network is up' message. Defaults to `1` if unset.|`HEALTH_CHECK_SILENT=1`|`1`|
@@ -60,10 +65,10 @@ $ docker run --privileged  -d \
 ## Ports
 | Port | Proto | Required | Function | Example |
 |----------|----------|----------|----------|----------|
-| `8191` | TCP | Yes | Jackett WebUI | `8191:8191`|
+| `9117` | TCP | Yes | Jackett WebUI | `9117:9117`|
 
 # Access the WebUI
-Access http://IPADDRESS:PORT from a browser on the same network. (for example: http://192.168.0.90:8191)
+Access http://IPADDRESS:PORT from a browser on the same network. (for example: http://192.168.0.90:9117)
 
 ## Default Info
 API Keys are randomly generated the first time that Jackett starts up. There is no Web UI password configured. This can be done manually from the Web UI.
