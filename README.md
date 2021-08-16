@@ -7,14 +7,11 @@ Shamelessly stolen from DyonR's Docker Jackett [implementation](https://github.c
 [![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/jackettvpn)](https://hub.docker.com/r/dyonr/jackettvpn)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/jackettvpn/latest)](https://hub.docker.com/r/dyonr/jackettvpn)
 
-Docker container which runs the latest headless [Jackett](https://github.com/Jackett/Jackett) Server while connecting to WireGuard or OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down.
-
-[preview]: https://raw.githubusercontent.com/DyonR/docker-templates/master/Screenshots/jackettvpn/jackettvpn-mainpage.png "Jackett Preview"
-![alt text][preview]
+Docker container which runs the latest headless [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) Server while connecting to WireGuard or OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down.
 
 ## Docker Features
-* Base: Debian bullseye-slim
-* Latest [Jackett](https://github.com/Jackett/Jackett)
+* Base: amd64/debian:sid-slim
+* Latest [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr)
 * Selectively enable or disable WireGuard or OpenVPN support
 * IP tables kill switch to prevent IP leaking when VPN connection fails
 * Configurable UID and GID for config files and /blackhole for Jackett
