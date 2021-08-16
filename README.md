@@ -14,7 +14,7 @@ Docker container which runs the latest headless [FlareSolverr](https://github.co
 * Latest [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr)
 * Selectively enable or disable WireGuard or OpenVPN support
 * IP tables kill switch to prevent IP leaking when VPN connection fails
-* Configurable UID and GID for config files and /blackhole for Jackett
+* Configurable UID and GID for config files for FlareSolverr.
 * Created with [Unraid](https://unraid.net/) in mind
 
 # Run container from Docker registry
@@ -24,7 +24,6 @@ To run the container use this command, with additional parameters, please refer 
 ```
 $ docker run --privileged  -d \
               -v /your/config/path/:/config \
-              -v /your/downloads/path/:/blackhole \
               -e "VPN_ENABLED=yes" \
               -e "VPN_TYPE=wireguard" \
               -e "LAN_NETWORK=192.168.0.0/24" \
@@ -37,14 +36,19 @@ $ docker run --privileged  -d \
 ## Environment Variables
 | Variable | Required | Function | Example | Default |
 |----------|----------|----------|----------|----------|
+`LOG_LEVEL` | No | Verbosity of the logging. Use `LOG_LEVEL=debug` for more information.| `LOG_LEVEL=info` | info | 
+`LOG_HTML` | No | Only for debugging. If `true` all HTML that passes through the proxy will be logged to the console in `debug` level.| `LOG_HTML=false` |false 
+`CAPTCHA_SOLVER` | No | Captcha solving method. It is used when a captcha is encountered. See the Captcha Solvers section.| `CAPTCHA_SOLVER=none` | none |
+`TZ` | No | Timezone used in the logs and the web browser.| `TZ=Europe/London`| UTC |
+`HEADLESS` | No | Only for debugging. To run the web browser in headless mode or visible. | `HEADLESS=true` | true | 
 |`VPN_ENABLED`| Yes | Enable VPN? (yes/no)|`VPN_ENABLED=yes`|`yes`|
 |`VPN_TYPE`| Yes | WireGuard or OpenVPN? (wireguard/openvpn)|`VPN_TYPE=wireguard`|`openvpn`|
 |`VPN_USERNAME`| No | If username and password provided, configures ovpn file automatically |`VPN_USERNAME=ad8f64c02a2de`||
 |`VPN_PASSWORD`| No | If username and password provided, configures ovpn file automatically |`VPN_PASSWORD=ac98df79ed7fb`||
 |`LAN_NETWORK`| Yes (atleast one) | Comma delimited local Network's with CIDR notation |`LAN_NETWORK=192.168.0.0/24,10.10.0.0/24`||
 |`NAME_SERVERS`| No | Comma delimited name servers |`NAME_SERVERS=1.1.1.1,1.0.0.1`|`1.1.1.1,1.0.0.1`|
-|`PUID`| No | UID applied to config files and blackhole |`PUID=99`|`99`|
-|`PGID`| No | GID applied to config files and blackhole |`PGID=100`|`100`|
+|`PUID`| No | UID applied to config files |`PUID=99`|`99`|
+|`PGID`| No | GID applied to config files |`PGID=100`|`100`|
 |`UMASK`| No | |`UMASK=002`|`002`|
 |`HEALTH_CHECK_HOST`| No |This is the host or IP that the healthcheck script will use to check an active connection|`HEALTH_CHECK_HOST=one.one.one.one`|`one.one.one.one`|
 |`HEALTH_CHECK_INTERVAL`| No |This is the time in seconds that the container waits to see if the internet connection still works (check if VPN died)|`HEALTH_CHECK_INTERVAL=300`|`300`|
@@ -87,6 +91,52 @@ User ID (PUID) and Group ID (PGID) can be found by issuing the following command
 ```
 id <username>
 ```
+
+## Captcha Solvers
+
+:warning: At this time none of the captcha solvers work. You can check the status in the open issues. Any help is welcome.
+
+Sometimes CloudFlare not only gives mathematical computations and browser tests, sometimes they also require the user to
+solve a captcha.
+If this is the case, FlareSolverr will return the error `Captcha detected but no automatic solver is configured.`
+
+FlareSolverr can be customized to solve the captchas automatically by setting the environment variable `CAPTCHA_SOLVER`
+to the file name of one of the adapters inside the [/captcha](src/captcha) directory.
+
+### hcaptcha-solver
+
+This method makes use of the [hcaptcha-solver](https://github.com/JimmyLaurent/hcaptcha-solver) project.
+
+NOTE: This solver works picking random images so it will fail in a lot of requests and it's hard to know if it is
+working or not. In a real use case with Sonarr/Radarr + Jackett it is still useful because those apps make a new request
+each 15 minutes. Eventually one of the requests is going to work and Jackett saves the cookie forever (until it stops
+working).
+
+To use this solver you must set the environment variable:
+
+```bash
+CAPTCHA_SOLVER=hcaptcha-solver
+```
+
+### CaptchaHarvester
+
+This method makes use of the [CaptchaHarvester](https://github.com/NoahCardoza/CaptchaHarvester) project which allows
+users to collect their own tokens from ReCaptcha V2/V3 and hCaptcha for free.
+
+To use this method you must set these environment variables:
+
+```bash
+CAPTCHA_SOLVER=harvester
+HARVESTER_ENDPOINT=https://127.0.0.1:5000/token
+```
+
+**Note**: above I set `HARVESTER_ENDPOINT` to the default configuration of the captcha harvester's server, but that
+could change if you customize the command line flags. Simply put, `HARVESTER_ENDPOINT` should be set to the URI of the
+route that returns a token in plain text when called.
+
+## Related projects
+
+* C# implementation => https://github.com/FlareSolverr/FlareSolverrSharp
 
 # Issues
 If you are having issues with this container please submit an issue on GitHub.
