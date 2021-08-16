@@ -2,10 +2,8 @@
 
 Shamelessly stolen from DyonR's Docker Jackett [implementation](https://github.com/DyonR/docker-Jackettvpn) and MarkusMcNugen qBittorrent [implementation](https://github.com/MarkusMcNugen/docker-qBittorrentvpn)
 
-## Documentation and Docker hub will update soon.
-
-[![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/jackettvpn)](https://hub.docker.com/r/dyonr/jackettvpn)
-[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/jackettvpn/latest)](https://hub.docker.com/r/dyonr/jackettvpn)
+[![Docker Pulls](https://img.shields.io/docker/pulls/trigger2k18/flaresolverrvpn)](https://hub.docker.com/r/trigger2k18/flaresolverrvpn)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/trigger2k18/flaresolverrvpn/latest)](https://hub.docker.com/r/trigger2k18/flaresolverrvpn)
 
 Docker container which runs the latest headless [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) Server while connecting to WireGuard or OpenVPN with iptables killswitch to prevent IP leakage when the tunnel goes down.
 
