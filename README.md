@@ -2,7 +2,7 @@
 
 Shamelessly stolen from DyonR's Docker Jackett [implementation](https://github.com/DyonR/docker-Jackettvpn) and MarkusMcNugen qBittorrent [implementation](https://github.com/MarkusMcNugen/docker-qBittorrentvpn)
 
-## Documentation will update soon.
+## Documentation and Docker hub will update soon.
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/jackettvpn)](https://hub.docker.com/r/dyonr/jackettvpn)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/jackettvpn/latest)](https://hub.docker.com/r/dyonr/jackettvpn)
@@ -41,13 +41,11 @@ $ docker run --privileged  -d \
 |`VPN_TYPE`| Yes | WireGuard or OpenVPN? (wireguard/openvpn)|`VPN_TYPE=wireguard`|`openvpn`|
 |`VPN_USERNAME`| No | If username and password provided, configures ovpn file automatically |`VPN_USERNAME=ad8f64c02a2de`||
 |`VPN_PASSWORD`| No | If username and password provided, configures ovpn file automatically |`VPN_PASSWORD=ac98df79ed7fb`||
-|`WEBUI_PASSWORD`| Yes | The password used to protect/access Jackett's web interface |`WEBUI_PASSWORD=RJayoLnKPjeyHbo-_ziH`||
 |`LAN_NETWORK`| Yes (atleast one) | Comma delimited local Network's with CIDR notation |`LAN_NETWORK=192.168.0.0/24,10.10.0.0/24`||
 |`NAME_SERVERS`| No | Comma delimited name servers |`NAME_SERVERS=1.1.1.1,1.0.0.1`|`1.1.1.1,1.0.0.1`|
 |`PUID`| No | UID applied to config files and blackhole |`PUID=99`|`99`|
 |`PGID`| No | GID applied to config files and blackhole |`PGID=100`|`100`|
 |`UMASK`| No | |`UMASK=002`|`002`|
-|`WEBUI_PORT`| No | Sets the port of the Jackett server in the ServerConfig.json, needs to match the **exposed port** in the Dockerfile  |`WEBUI_PORT=9117`|`9117`|
 |`HEALTH_CHECK_HOST`| No |This is the host or IP that the healthcheck script will use to check an active connection|`HEALTH_CHECK_HOST=one.one.one.one`|`one.one.one.one`|
 |`HEALTH_CHECK_INTERVAL`| No |This is the time in seconds that the container waits to see if the internet connection still works (check if VPN died)|`HEALTH_CHECK_INTERVAL=300`|`300`|
 |`HEALTH_CHECK_SILENT`| No |Set to `1` to supress the 'Network is up' message. Defaults to `1` if unset.|`HEALTH_CHECK_SILENT=1`|`1`|
@@ -56,24 +54,15 @@ $ docker run --privileged  -d \
 ## Volumes
 | Volume | Required | Function | Example |
 |----------|----------|----------|----------|
-| `config` | Yes | Jackett and OpenVPN config files | `/your/config/path/:/config`|
-| `blackhole` | No | Default blackhole path for saving magnet links | `/your/blackhole/path/:/blackhole`|
+| `config` | Yes | FlarSsolverr and OpenVPN config files | `/your/config/path/:/config` - this creates two sub folders, `flaresolverr` and `openvpn`, place your .ovpn files there|
 
 ## Ports
 | Port | Proto | Required | Function | Example |
 |----------|----------|----------|----------|----------|
-| `9117` | TCP | Yes | Jackett WebUI | `9117:9117`|
+| `8191` | TCP | Yes | FlareSolverr communication port | `8191:8191`|
 
-# Access the WebUI
-Access http://IPADDRESS:PORT from a browser on the same network. (for example: http://192.168.0.90:9117)
-
-## Default Info
-API Keys are randomly generated the first time that Jackett starts up. There is no Web UI password configured. This can be done manually from the Web UI.
-
-| Credential | Default Value |
-|----------|----------|
-|`API Key`| Randomly generated |
-|`WebUI Password`| No password |
+# Access the FlareSolverr
+Access http://IPADDRESS:PORT from a browser on the same network. (for example: http://192.168.0.90:8191)
 
 # How to use WireGuard 
 The container will fail to boot if `VPN_ENABLED` is set and there is no valid .conf file present in the /config/wireguard directory. Drop a .conf file from your VPN provider into /config/wireguard and start the container again. The file must have the name `wg0.conf`, or it will fail to start.
