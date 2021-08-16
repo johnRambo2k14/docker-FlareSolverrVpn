@@ -1,4 +1,4 @@
-# [Jackett](https://github.com/Jackett/Jackett), WireGuard and OpenVPN
+# [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr), WireGuard and OpenVPN
 [![Docker Pulls](https://img.shields.io/docker/pulls/dyonr/jackettvpn)](https://hub.docker.com/r/dyonr/jackettvpn)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/dyonr/jackettvpn/latest)](https://hub.docker.com/r/dyonr/jackettvpn)
 
